@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Technical architecture showcase for the Cellma Patient Portal.">
+  <title>Sign in | Cellma Patient Portal Architecture</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#overview" aria-label="Cellma Architecture home">
+      <span class="brand-mark">C</span>
+      <span><strong>CELLMA</strong><small>ARCHITECTURE SHOWCASE</small></span>
+    </a>
+    <nav class="topnav">
+      <a href="#overview">Overview</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#security">Security</a>
+      <a href="#integrations">Integrations</a>
+    </nav>
+    <button class="btn btn-outline" id="presentBtn">Presentation mode</button>
+  </header>
+
+
+  <section class="auth-screen" id="authScreen" aria-labelledby="authTitle">
+    <form class="auth-card" id="loginForm" autocomplete="on">
+      <div class="auth-brand"><span class="brand-mark">C</span><span><strong>CELLMA</strong><small>ARCHITECTURE SHOWCASE</small></span></div>
+      <p class="eyebrow">RESTRICTED PRESENTATION</p>
+      <h1 id="authTitle">Welcome back</h1>
+      <p class="auth-subtitle">Sign in to view the Patient Portal architecture.</p>
+      <label for="username">Username</label>
+      <input id="username" name="username" type="text" placeholder="Enter username" value="" autocomplete="username" required>
+      <label for="password">Password</label>
+      <div class="password-field">
+        <input id="password" name="password" type="password" placeholder="Enter password" autocomplete="current-password" required>
+        <button class="password-toggle" type="button" id="togglePassword" aria-label="Show password" aria-pressed="false"><span id="eyeIcon" aria-hidden="true">◉</span></button>
+      </div>
+      <p class="login-error" id="loginError" role="alert" aria-live="polite"></p>
+      <button class="btn btn-primary auth-submit" type="submit">Sign in <span>→</span></button>
+      <p class="auth-footnote">Demo access gate for the architecture presentation.</p>
+    </form>
+  </section>
+
+  <main id="protectedContent" class="protected-content" hidden>
+    <section class="hero" id="overview">
+      <div class="hero-copy">
+        <p class="eyebrow">HEALTHCARE · BACKEND ENGINEERING · SYSTEM DESIGN</p>
+        <h1>Cellma Patient<br><span>Portal Architecture</span></h1>
+        <p class="hero-lead">A technical walkthrough of the patient-facing application, backend API, shared data layer, security controls and external integrations.</p>
+        <div class="hero-tags">
+          <span>React</span><span>Java 21</span><span>Spring Boot</span><span>MySQL</span><span>Kafka</span><span>JWT</span><span>Razorpay</span>
+        </div>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#architecture">Explore architecture <span>→</span></a>
+            </div>
+      </div>
+      <div class="hero-visual">
+        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+        <div class="hero-node main-node"><span class="node-icon">✚</span><b>Patient Portal</b><small>Digital healthcare access</small></div>
+        <div class="float-node node-react">React</div>
+        <div class="float-node node-api">Patient API</div>
+        <div class="float-node node-db">MySQL</div>
+        <div class="float-node node-kafka">Kafka</div>
+      </div>
+    </section>
+
+    <section class="section" id="architecture">
+      <div class="section-heading">
+        <div><p class="eyebrow">01 / SYSTEM DESIGN</p><h2>High-level architecture</h2><p class="muted">Select a component to see its role. Solid lines represent the known logical flow; verify detailed service boundaries before presenting.</p></div>
+        <span class="status-pill">Logical view</span>
+      </div>
+      <div class="architecture-layout">
+        <div class="diagram-wrap">
+          <div class="diagram">
+            <div class="diagram-row">
+              <button class="arch-node patient" data-detail="patient"><span class="node-symbol">♙</span><b>Patient</b><small>Browser / client</small></button>
+            </div>
+            <div class="connector"><span>HTTPS</span><i></i></div>
+            <div class="diagram-row">
+              <button class="arch-node frontend" data-detail="frontend"><span class="node-symbol">◈</span><b>React Patient Portal</b><small>Patient-facing UI</small></button>
+            </div>
+            <div class="connector"><span>REST API · JWT</span><i></i></div>
+            <div class="diagram-row">
+              <button class="arch-node backend" data-detail="backend"><span class="node-symbol">⌘</span><b>Cellma Patient API</b><small>Java 21 · Spring Boot</small></button>
+            </div>
+            <div class="branch-label">Backend integrations and shared data</div>
+            <div class="diagram-grid">
+              <button class="arch-node database" data-detail="database"><span class="node-symbol">▤</span><b>Shared Cellma DB</b><small>MySQL</small></button>
+              <button class="arch-node payment" data-detail="payment"><span class="node-symbol">₹</span><b>Razorpay</b><small>Payment gateway</small></button>
+              <button class="arch-node kafka" data-detail="kafka"><span class="node-symbol">⇄</span><b>Kafka</b><small>Event messaging</small></button>
+            </div>
+            <div class="connector"><span>Kafka event</span><i></i></div>
+            <div class="diagram-row">
+              <button class="arch-node notification" data-detail="notification"><span class="node-symbol">✉</span><b>Notification Service</b><small>Separate consumer service · Email</small></button>
+            </div>
+            <div class="diagram-note"><b>Architecture note:</b> React calls the Patient API; it does not connect directly to MySQL. The Patient API and main Cellma platform use a shared database, based on the project details provided.</div>
+          </div>
+        </div>
+        <aside class="detail-panel" aria-live="polite">
+          <p class="eyebrow">COMPONENT DETAILS</p>
+          <div id="detailContent">
+            <div class="detail-icon">⌘</div><h3>Cellma Patient API</h3>
+            <p class="muted">Select any component in the architecture to inspect its responsibility and technologies.</p>
+            <ul><li>Backend application for patient-facing operations</li><li>Exposes REST APIs to the React frontend</li><li>Works with the shared Cellma MySQL database</li></ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="security">
+      <div class="section-heading">
+        <div><p class="eyebrow">02 / APPLICATION SECURITY</p><h2>Security and request lifecycle</h2><p class="muted">Two distinct paths: login/token issuance and subsequent authenticated API requests.</p></div>
+      </div>
+      <div class="tabs" role="tablist">
+        <button class="tab active" data-tab="loginFlow" role="tab" aria-selected="true">Login & token generation</button>
+        <button class="tab" data-tab="apiFlow" role="tab" aria-selected="false">Authenticated API request</button>
+      </div>
+      <div class="flow-card">
+        <div id="loginFlow" class="flow-content active">
+          <div class="flow-step"><span>01</span><div><b>React sends login request</b><p>Credentials and request metadata reach the Patient API over HTTPS.</p></div></div>
+          <div class="flow-step"><span>02</span><div><b>IP pre-check</b><p>Check the requesting IP against blocked-IP records stored in the database.</p></div></div>
+          <div class="flow-step"><span>03</span><div><b>Custom login rate limiter</b><p>Login-attempt counters are maintained in local application memory. Requests beyond the configured threshold trigger the blocking policy.</p></div></div>
+          <div class="flow-step"><span>04</span><div><b>Credential validation</b><p>Validate the supplied credentials using the application's authentication mechanism.</p></div></div>
+          <div class="flow-step"><span>05</span><div><b>JWT generation</b><p>After successful authentication, generate a JWT and return it to the frontend.</p></div></div>
+          <div class="callout"><b>Confirmed implementation:</b> blocked IP information is stored in the database; login rate-limit counters are local-memory state.</div>
+        </div>
+        <div id="apiFlow" class="flow-content">
+          <div class="flow-step"><span>01</span><div><b>React sends API request</b><p>The frontend includes the JWT in the configured request header.</p></div></div>
+          <div class="flow-step"><span>02</span><div><b>Custom JWT filter</b><p>A custom Spring Security <code>OncePerRequestFilter</code> extracts and validates the token and establishes the authenticated security context.</p></div></div>
+          <div class="flow-step"><span>03</span><div><b>Authorization</b><p>Spring Security evaluates whether the authenticated user is permitted to access the requested resource.</p></div></div>
+          <div class="flow-step"><span>04</span><div><b>Custom sanitization filter</b><p>Inspects request data for configured prohibited characters or malicious patterns and rejects suspicious input.</p></div></div>
+          <div class="flow-step"><span>05</span><div><b>Application processing</b><p>Accepted requests proceed to the controller, service and repository layers.</p></div></div>
+          <div class="callout warning"><b>Implementation detail to verify:</b> the exact placement of the sanitization filter and rate limiter depends on filter registration. This page reflects the request order you described, not an independently inspected source-code configuration.</div>
+        </div>
+      </div>
+      <div class="security-grid">
+        <article class="mini-card"><span class="mini-icon">◉</span><h3>JWT authentication</h3><p>Custom <code>OncePerRequestFilter</code> validates tokens on protected requests.</p></article>
+        <article class="mini-card"><span class="mini-icon">⌁</span><h3>Login rate limiting</h3><p>Custom implementation with local-memory counters; scope is login attempts.</p></article>
+        <article class="mini-card"><span class="mini-icon">⊘</span><h3>IP blocking</h3><p>Blocked IP records are persisted in the database and checked during login pre-checks.</p></article>
+        <article class="mini-card"><span class="mini-icon">⌕</span><h3>Input sanitization</h3><p>Custom filter rejects request data matching configured malicious patterns.</p></article>
+      </div>
+    </section>
+
+    <section class="section" id="integrations">
+      <div class="section-heading">
+        <div><p class="eyebrow">03 / EXTERNAL & ASYNCHRONOUS INTEGRATIONS</p><h2>Payment and event-driven notifications</h2><p class="muted">Separate integration views help explain synchronous payment interactions and asynchronous messaging.</p></div>
+      </div>
+      <div class="integration-grid">
+        <article class="integration-card">
+          <div class="integration-head"><span class="integration-icon payment-icon">₹</span><div><h3>Razorpay payment integration</h3><p class="muted">Payment gateway</p></div></div>
+          <div class="sequence">
+            <div><b>Patient</b><small>Initiates a payment-related action</small></div><i>↓</i>
+            <div><b>React Patient Portal</b><small>Starts the payment flow</small></div><i>↓</i>
+            <div><b>Patient API</b><small>Backend integration with Razorpay</small></div><i>↓</i>
+            <div><b>Razorpay</b><small>External payment processing</small></div><i>↓</i>
+            <div><b>Backend verification & status update</b><small>Exact callback/webhook and persistence flow to be confirmed</small></div>
+          </div>
+          <p class="note">Before presenting the detailed payment sequence, confirm whether your implementation uses checkout signature verification, webhooks, both, and how appointment/payment status is updated.</p>
+        </article>
+        <article class="integration-card">
+          <div class="integration-head"><span class="integration-icon kafka-icon">⇄</span><div><h3>Kafka notification pipeline</h3><p class="muted">Asynchronous communication</p></div></div>
+          <div class="sequence">
+            <div><b>Patient API</b><small>Event producer</small></div><i>↓</i>
+            <div><b>Kafka topic</b><small>Stores and distributes events</small></div><i>↓</i>
+            <div><b>Notification Service</b><small>Separate service consuming events</small></div><i>↓</i>
+            <div><b>Email processing</b><small>Notification delivery workflow</small></div>
+          </div>
+          <p class="note">Topic names, partition strategy, retry/DLT behavior, delivery guarantees and duplicate handling should be added only after confirming the actual implementation.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="backend">
+      <div class="section-heading"><div><p class="eyebrow">04 / BACKEND DESIGN</p><h2>Patient API internal layers</h2><p class="muted">A conceptual view of the Spring Boot request-to-data path.</p></div></div>
+      <div class="layer-stack">
+        <div class="layer"><span>01</span><div><b>Security & filters</b><small>JWT authentication · Authorization · Custom sanitization · Login protection</small></div><em>Cross-cutting</em></div>
+        <div class="layer"><span>02</span><div><b>Controller layer</b><small>REST endpoints · Request/response mapping</small></div><em>HTTP</em></div>
+        <div class="layer"><span>03</span><div><b>Service layer</b><small>Business logic · Validation · Transaction boundaries</small></div><em>Business</em></div>
+        <div class="layer"><span>04</span><div><b>Repository / data access</b><small>Database queries · ORM or SQL access, as used by the application</small></div><em>Persistence</em></div>
+        <div class="layer database-layer"><span>05</span><div><b>Shared Cellma MySQL database</b><small>Data used by Patient API and the core Cellma platform</small></div><em>Data</em></div>
+      </div>
+      <div class="callout warning"><b>Shared database trade-off:</b> this reduces the need for API-to-API calls for shared records, but introduces schema coupling, coordinated database changes and potential contention. Explain the actual access controls and ownership boundaries used by your team.</div>
+    </section>
+
+  </main>
+
+  <footer><span>Cellma Patient Portal · Architecture Showcase</span><span>Prepared for technical discussion · Verify project-specific details before presenting</span></footer>
+  <script src="js/app.js"></script>
+</body>
+</html>
